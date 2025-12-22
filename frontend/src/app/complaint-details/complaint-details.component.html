@@ -1,0 +1,40 @@
+<div class="container container-center">
+  <div class="glass-panel form-card">
+    <h2 class="gradient-text">File a Complaint</h2>
+    
+    <form [formGroup]="complaintForm" (ngSubmit)="onSubmit()">
+      
+      <div class="form-group">
+        <label>Subject / Title</label>
+        <input type="text" formControlName="title" placeholder="e.g. Leaking Tap in Room 101">
+      </div>
+
+      <div class="form-group">
+        <label>Category</label>
+        <select formControlName="category">
+          <option value="Plumbing">Plumbing</option>
+          <option value="Electrical">Electrical</option>
+          <option value="Facility">Facility / Furniture</option>
+          <option value="Internet">Internet / Wi-Fi</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <textarea formControlName="description" rows="5" placeholder="Describe the issue in detail..."></textarea>
+      </div>
+      
+      <div class="form-group">
+         <label>Attachment URL (Optional)</label>
+         <input type="text" formControlName="attachment_url" placeholder="https://image-url.com/...">
+      </div>
+
+      <button type="submit" class="btn-primary full-width" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Submitting...' : 'Submit Complaint' }} 
+      </button>
+      
+      <button type="button" class="btn-secondary full-width mt-2" routerLink="/complaints">Cancel</button>
+    </form>
+  </div>
+</div>
