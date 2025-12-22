@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ComplaintService } from '../../services/complaint.service';
+import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { FilterStatusPipe } from '../../pipes/filter-status.pipe';
 
@@ -13,18 +14,21 @@ import { FilterStatusPipe } from '../../pipes/filter-status.pipe';
 })
 export class AdminDashboardComponent implements OnInit {
   complaints: any[] = [];
+  staffList: any[] = [];
   isLoading = true;
-  // In real app, load staff list from API. Mocking for now.
-  staffList = [
-    { id: 3, name: 'Technician 1' }, 
-    { id: 4, name: 'Plumber Joe' },
-    { id: 5, name: 'IT Support' }
-  ];
 
-  constructor(private complaintService: ComplaintService) {}
+  constructor(private complaintService: ComplaintService, private authService: AuthService) {}
 
   ngOnInit() {
     this.loadComplaints();
+    this.loadStaff();
+  }
+
+  loadStaff() {
+    this.authService.getStaff().subscribe({
+      next: (data) => this.staffList = data,
+      error: (err) => console.error('Failed to load staff', err)
+    });
   }
 
   loadComplaints() {
