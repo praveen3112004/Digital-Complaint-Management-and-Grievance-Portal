@@ -1,27 +1,69 @@
-# Frontend
+# Digital Complaint Management & Grievance Portal
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.21.
+A full-stack Capstone Project built with Angular 18, Node.js, Express, and MySQL.
 
-## Development server
+## Project Structure
+- `frontend/`: Angular 18 application (Client).
+- `backend/`: Node.js + Express API (Server).
+- `database/`: SQL Schema.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Prerequisites
+- Node.js (v18+)
+- MySQL Server
 
-## Code scaffolding
+## Setup Instructions
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### 1. Database Setup
+1. Open your MySQL client (Workbench, CLI, etc.).
+2. Run the script in `database/schema.sql`.
+3. This creates the `complaint_portal` database, `users` table, and `complaints` table.
 
-## Build
+### 2. Backend Setup
+1. Navigate to backend: `cd backend`
+2. Install dependencies: `npm install`
+3. Configure `.env`:
+   - Open `.env` and update `DB_PASSWORD` to your MySQL root password.
+4. Start Server:
+   - Dev Mode: `npx nodemon`
+   - Build & Run: `npx tsc && node dist/server.js`
+   - API runs on: `http://localhost:3000`
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### 3. Frontend Setup
+1. Navigate to frontend: `cd frontend`
+2. Install dependencies: `npm install`
+3. Start Application: `ng serve`
+4. Open browser: `http://localhost:4200`
 
-## Running unit tests
+## System Architecture
+- **Frontend**: Angular 18 standalone components, Angular Material (Table/Paginator), Custom "Creative" SCSS design.
+- **Backend**: Express.js REST API with TypeScript, MySQL2 connection pool.
+- **Auth**: Simple Role-based Access Control (RBAC) via custom headers (simulated token). Guarded Routes in Angular.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Key Features
+- **User**: Register, Login, File Complaint, View My Complaints.
+- **Staff**: View Assigned Complaints, Update Status (In-progress -> Resolved).
+- **Admin**: View All Complaints, Analytics (Count), Assign Staff.
 
-## Running end-to-end tests
+## Sample API Usage
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+**Register User:**
+```http
+POST /api/users/register
+{
+  "name": "Jane User",
+  "email": "jane@example.com",
+  "password": "password123",
+  "role": "User"
+}
+```
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+**File Complaint:**
+```http
+POST /api/complaints
+Headers: x-user-id: 1, x-user-role: User
+{
+  "title": "Broken Chair",
+  "category": "Facility",
+  "description": "Chair leg is broken in Room 202"
+}
+```
