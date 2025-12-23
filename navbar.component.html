@@ -1,0 +1,22 @@
+<nav class="navbar glass-panel">
+  <div class="logo">
+    <a routerLink="/">Grievance<span class="highlight">Portal</span></a>
+  </div>
+  
+  <div class="nav-links">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+    
+    <ng-container *ngIf="authService.isLoggedIn(); else guestLinks">
+      <a routerLink="/complaints" routerLinkActive="active">Complaints</a>
+      
+      <a *ngIf="isStaff" routerLink="/staff/dashboard" routerLinkActive="active">Staff Dashboard</a>
+      <a *ngIf="isAdmin" routerLink="/admin/dashboard" routerLinkActive="active">Admin</a>
+      
+      <button class="btn-logout" (click)="logout()">Logout</button>
+    </ng-container>
+
+    <ng-template #guestLinks>
+      <a routerLink="/register" routerLinkActive="active">Login / Register</a>
+    </ng-template>
+  </div>
+</nav>
