@@ -1,0 +1,97 @@
+.mb-4 { margin-bottom: 2rem; }
+
+.grid-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s;
+  
+  &:hover {
+    transform: translateY(-5px);
+  }
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 99px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: var(--surface-dark);
+  border: 1px solid rgba(255,255,255,0.1);
+
+  &.assigned { color: var(--warning-color); border-color: var(--warning-color); }
+  &.in-progress { color: var(--primary-color); border-color: var(--primary-color); }
+  &.resolved { color: var(--success-color); border-color: var(--success-color); }
+}
+
+.date {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.25rem;
+}
+
+.meta {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.desc {
+  flex-grow: 1;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-sm {
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+
+.btn-progress {
+  background: rgba(79, 70, 229, 0.2);
+  color: #a5b4fc;
+  border: 1px solid rgba(79, 70, 229, 0.4);
+  
+  &:hover { background: rgba(79, 70, 229, 0.4); }
+}
+
+.btn-resolve {
+  background: rgba(16, 185, 129, 0.2);
+  color: #6ee7b7;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  
+  &:hover { background: rgba(16, 185, 129, 0.4); }
+}
+
+.text-success {
+  color: var(--success-color);
+  font-weight: 600;
+}

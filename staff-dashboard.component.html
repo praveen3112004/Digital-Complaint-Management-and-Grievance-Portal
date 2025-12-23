@@ -1,0 +1,29 @@
+<div class="container">
+  <h2 class="gradient-text mb-4">Staff Dashboard</h2>
+
+  <div class="loading" *ngIf="isLoading">Loading tasks...</div>
+
+  <div class="grid-layout" *ngIf="!isLoading">
+    <div class="card glass-panel" *ngFor="let item of complaints">
+      <div class="card-header">
+        <span class="badge" [ngClass]="item.status.toLowerCase().replace(' ', '-')">{{ item.status }}</span>
+        <span class="date">{{ item.created_at | date:'short' }}</span>
+      </div>
+      
+      <h3>{{ item.title }}</h3>
+      <div class="meta">Category: {{ item.category }}</div>
+      
+      <p class="desc">{{ item.description }}</p>
+      
+      <div class="actions">
+        <button class="btn-sm btn-progress" *ngIf="item.status === 'Assigned'" (click)="updateStatus(item, 'In-progress')">Start Work</button>
+        <button class="btn-sm btn-resolve" *ngIf="item.status === 'In-progress'" (click)="updateStatus(item, 'Resolved')">Mark Resolved</button>
+        <span *ngIf="item.status === 'Resolved'" class="text-success">Completed</span>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading && complaints.length === 0" class="empty-state">
+    <p>No complaints assigned to you.</p>
+  </div>
+</div>
