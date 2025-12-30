@@ -35,7 +35,11 @@ export const getComplaints = async (req: Request, res: Response) => {
 export const createComplaint = async (req: Request, res: Response) => {
     try {
         const user = getUser(req);
-        const { title, description, category, attachment_url } = req.body;
+        const { title, description, category } = req.body;
+        // Construct URL if file exists
+        const fileUrl = (req as any).file ? `http://localhost:3000/uploads/${(req as any).file.filename}` : null;
+        // Fallback to attachment_url from body just in case (optional)
+        const attachment_url = fileUrl || req.body.attachment_url;
 
         if (!title || !description || !category) {
              res.status(400).json({ message: 'Missing required fields' });

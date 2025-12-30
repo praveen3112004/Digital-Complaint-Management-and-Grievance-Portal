@@ -10,12 +10,15 @@ export class ComplaintService {
 
   constructor(private http: HttpClient) { }
 
-  private getHeaders(): HttpHeaders {
-    // Manually setting headers as per our "Simple" backend auth
-    return new HttpHeaders({
+  private getHeaders(json: boolean = true): HttpHeaders {
+    let headers = new HttpHeaders({
       'x-user-id': localStorage.getItem('x-user-id') || '',
       'x-user-role': localStorage.getItem('x-user-role') || ''
     });
+    if (json) {
+      headers = headers.set('Content-Type', 'application/json');
+    }
+    return headers;
   }
 
   getComplaints(): Observable<any[]> {
@@ -23,7 +26,7 @@ export class ComplaintService {
   }
 
   createComplaint(complaint: any): Observable<any> {
-    return this.http.post(this.apiUrl, complaint, { headers: this.getHeaders() });
+    return this.http.post(this.apiUrl, complaint, { headers: this.getHeaders(complaint instanceof FormData ? false : true) });
   }
 
   updateStatus(id: number, status: string, notes: string = ''): Observable<any> {

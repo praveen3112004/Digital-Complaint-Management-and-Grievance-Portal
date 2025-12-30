@@ -9,24 +9,26 @@
         <input type="text" formControlName="title" placeholder="e.g. Leaking Tap in Room 101">
       </div>
 
-      <div class="form-group">
-        <label>Category</label>
-        <select formControlName="category">
-          <option value="Plumbing">Plumbing</option>
-          <option value="Electrical">Electrical</option>
-          <option value="Facility">Facility / Furniture</option>
-          <option value="Internet">Internet / Wi-Fi</option>
-          <option value="Other">Other</option>
-        </select>
-      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Category</label>
+          <select formControlName="category">
+            <option value="Plumbing">Plumbing</option>
+            <option value="Electrical">Electrical</option>
+            <option value="Facility">Facility / Furniture</option>
+            <option value="Internet">Internet / Wi-Fi</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
 
-      <div class="form-group">
-        <label>Priority</label>
-        <select formControlName="priority">
-          <option value="Low">Low</option>
-          <option value="Medium">Medium</option>
-          <option value="High">High</option>
-        </select>
+        <div class="form-group">
+          <label>Priority</label>
+          <select formControlName="priority">
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+          </select>
+        </div>
       </div>
 
       <div class="form-group">
@@ -35,8 +37,11 @@
       </div>
       
       <div class="form-group">
-         <label>Attachment URL (Optional)</label>
-         <input type="text" formControlName="attachment_url" placeholder="https://image-url.com/...">
+         <label>Attachment Image (Optional)</label>
+         <input type="file" (change)="onFileSelected($event)" accept="image/*">
+         <div *ngIf="filePreview" class="mt-2">
+           <img [src]="filePreview" alt="Preview" style="max-height: 150px; border-radius: 8px;">
+         </div>
       </div>
 
       <button type="submit" class="btn-primary full-width" [disabled]="isSubmitting">

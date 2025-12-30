@@ -15,6 +15,13 @@
       <div class="meta">Category: {{ item.category }}</div>
       
       <p class="desc">{{ item.description }}</p>
+
+      <div *ngIf="item.attachment_url" class="attachment mt-2">
+        <p class="text-sm text-secondary">Attachment:</p>
+        <a [href]="item.attachment_url" target="_blank">
+          <img [src]="item.attachment_url" alt="Attachment" style="max-width: 100%; max-height: 200px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+        </a>
+      </div>
       
       <div class="actions">
         <button class="btn-sm btn-progress" *ngIf="item.status === 'Assigned'" (click)="updateStatus(item, 'In-progress')">Start Work</button>

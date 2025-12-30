@@ -44,6 +44,15 @@ h2 {
     }
 }
 
+.form-row {
+    display: flex;
+    gap: 1.5rem;
+    
+    .form-group {
+        flex: 1;
+    }
+}
+
 .full-width {
     width: 100%;
 }
