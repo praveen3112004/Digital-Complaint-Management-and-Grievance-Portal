@@ -14,7 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.assignComplaint = exports.updateStatus = exports.updateComplaintRaw = exports.createComplaint = exports.getComplaints = void 0;
 const database_1 = __importDefault(require("../config/database"));
-// Helper to get user from request (set by middleware)
 const getUser = (req) => req.user;
 const getComplaints = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -26,12 +25,9 @@ const getComplaints = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             params.push(user.id);
         }
         else if (user.role === 'Staff') {
-            // Staff sees assigned to them (or all? Usually assigned). Let's say assigned + open for picking?
-            // Requirement: "Staff can: View assigned complaints"
             query += ' WHERE c.staff_id = ?';
             params.push(user.id);
         }
-        // Admin sees all (no filter)
         query += ' ORDER BY c.created_at DESC';
         const [rows] = yield database_1.default.query(query, params);
         res.json(rows);
@@ -62,8 +58,6 @@ exports.createComplaint = createComplaint;
 const updateComplaintRaw = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = getUser(req);
-        // const { id } = req.params;
-        // Logic for specialized updates per role
     }
     catch (error) { }
 });
@@ -84,15 +78,6 @@ const updateStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             res.status(404).json({ message: 'Complaint not found' });
             return;
         }
-        // Update
-        // Note: We might want to save resolution notes somewhere, but the DB schema for complaints didn't explicitly have it.
-        // The requirements said "Add resolution notes". I should have added a column. 
-        // I will do it now or just append to description. 
-        // Better: ALTER TABLE or just assume description update.
-        // Let's add the column via a migration script or just assume the schema has it (I can update the schema setup).
-        // I'll append to description for now to be safe with existing schema, OR update schema.
-        // Requirement: "Add resolution notes". I will assume I can update the description or I should add a field.
-        // Let's add a field 'resolution_notes' to schema query for robustness.
         yield database_1.default.query('UPDATE complaints SET status = ? WHERE id = ?', [status, id]);
         res.json({ message: 'Complaint status updated' });
     }
