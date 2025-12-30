@@ -15,6 +15,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.loginUser = exports.registerUser = void 0;
 const database_1 = __importDefault(require("../config/database"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
+const nodemailer_1 = __importDefault(require("nodemailer"));
+const transporter = nodemailer_1.default.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+    }
+});
 const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { name, email, password, role, contact_info } = req.body;
@@ -31,12 +39,23 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             'INSERT INTO users (name, email, password, role, contact_info) VALUES (?, ?, ?, ?, ?)',
             [name, email, hashedPassword, role, contact_info]
         );
-
+        transporter.sendMail({
+            from: `"Digital Complaint System" <${process.env.EMAIL_USER}>`,
+            to: email,
+            subject: 'Account Created Successfully',
+            html: `
+                <h2>Welcome, ${name}</h2>
+                <p>Your account has been created successfully.</p>
+                <p><b>Role:</b> ${role}</p>
+                <p>You can now log in and start using the system.</p>
+                <br/>
+                <p>Regards,<br/>Digital Complaint Management Team</p>
+            `
+        }).catch(err => console.error('Email error:', err));
         res.status(201).json({
             message: 'User registered successfully',
             userId: result.insertId
         });
-
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error' });
