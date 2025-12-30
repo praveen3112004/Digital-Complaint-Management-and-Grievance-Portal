@@ -21,7 +21,7 @@
 
 .list-header {
   display: grid;
-  grid-template-columns: 60px 2fr 100px 150px 150px;
+  grid-template-columns: 60px 2fr 100px 100px 150px 150px;
   padding: 1rem;
   border-bottom: 1px solid rgba(255,255,255,0.1);
   font-weight: 600;
@@ -30,7 +30,7 @@
 
 .list-row {
   display: grid;
-  grid-template-columns: 60px 2fr 100px 150px 150px;
+  grid-template-columns: 60px 2fr 100px 100px 150px 150px;
   padding: 1rem;
   align-items: center;
   border-bottom: 1px solid rgba(255,255,255,0.05);

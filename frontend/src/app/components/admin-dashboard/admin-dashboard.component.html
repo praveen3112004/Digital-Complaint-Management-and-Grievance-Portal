@@ -17,6 +17,7 @@
       <div>ID</div>
       <div>Title</div>
       <div>Status</div>
+      <div>Priority</div>
       <div>Assigned To</div>
       <div>Action</div>
     </div>
@@ -29,6 +30,9 @@
       </div>
       <div>
          <span class="badge" [ngClass]="item.status.toLowerCase()">{{ item.status }}</span>
+      </div>
+      <div>
+         <span class="badge" [ngClass]="(item.priority || 'Medium').toLowerCase()">{{ item.priority || 'Medium' }}</span>
       </div>
       <div>
         <span *ngIf="item.staff_id">{{ item.assigned_to || 'Staff #' + item.staff_id }}</span>

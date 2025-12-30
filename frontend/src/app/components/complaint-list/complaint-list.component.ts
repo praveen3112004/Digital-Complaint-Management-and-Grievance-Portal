@@ -17,7 +17,7 @@ import { RouterLink } from '@angular/router';
   styleUrls: ['./complaint-list.component.scss']
 })
 export class ComplaintListComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'title', 'category', 'status', 'created_at'];
+  displayedColumns: string[] = ['id', 'title', 'category', 'status', 'priority', 'created_at'];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -48,6 +48,14 @@ export class ComplaintListComponent implements OnInit {
       case 'Assigned': return 'accent';
       case 'In-progress': return 'primary';
       case 'Resolved': return 'primary'; // Custom CSS overrides material colors often, but keeping simple
+      default: return 'primary';
+    }
+  }
+  getPriorityColor(priority: string): string {
+    switch (priority) {
+      case 'High': return 'warn';
+      case 'Medium': return 'accent';
+      case 'Low': return 'primary';
       default: return 'primary';
     }
   }

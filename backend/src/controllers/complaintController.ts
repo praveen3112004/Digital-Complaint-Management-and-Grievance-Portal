@@ -43,8 +43,8 @@ export const createComplaint = async (req: Request, res: Response) => {
         }
 
         const [result] = await pool.query<ResultSetHeader>(
-            'INSERT INTO complaints (user_id, title, description, category, attachment_url, status) VALUES (?, ?, ?, ?, ?, ?)',
-            [user.id, title, description, category, attachment_url || null, 'Open']
+            'INSERT INTO complaints (user_id, title, description, category, attachment_url, status, priority) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            [user.id, title, description, category, attachment_url || null, 'Open', req.body.priority || 'Medium']
         );
 
         res.status(201).json({ message: 'Complaint filed successfully', id: result.insertId });

@@ -24,6 +24,7 @@ export class ComplaintDetailsComponent {
       title: ['', Validators.required],
       category: ['Facility', Validators.required],
       description: ['', Validators.required],
+      priority: ['Medium', Validators.required],
       attachment_url: [''] // Optional
     });
   }
