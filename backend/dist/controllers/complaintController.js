@@ -45,12 +45,16 @@ exports.getComplaints = getComplaints;
 const createComplaint = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = getUser(req);
-        const { title, description, category, attachment_url } = req.body;
+        const { title, description, category } = req.body;
+        // Construct URL if file exists
+        const fileUrl = req.file ? `http://localhost:3000/uploads/${req.file.filename}` : null;
+        // Fallback to attachment_url from body just in case (optional)
+        const attachment_url = fileUrl || req.body.attachment_url;
         if (!title || !description || !category) {
             res.status(400).json({ message: 'Missing required fields' });
             return;
         }
-        const [result] = yield database_1.default.query('INSERT INTO complaints (user_id, title, description, category, attachment_url, status) VALUES (?, ?, ?, ?, ?, ?)', [user.id, title, description, category, attachment_url || null, 'Open']);
+        const [result] = yield database_1.default.query('INSERT INTO complaints (user_id, title, description, category, attachment_url, status, priority) VALUES (?, ?, ?, ?, ?, ?, ?)', [user.id, title, description, category, attachment_url || null, 'Open', req.body.priority || 'Medium']);
         res.status(201).json({ message: 'Complaint filed successfully', id: result.insertId });
     }
     catch (error) {
@@ -93,7 +97,8 @@ const updateStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         // I'll append to description for now to be safe with existing schema, OR update schema.
         // Requirement: "Add resolution notes". I will assume I can update the description or I should add a field.
         // Let's add a field 'resolution_notes' to schema query for robustness.
-        yield database_1.default.query('UPDATE complaints SET status = ? WHERE id = ?', [status, id]);
+        // Update status and notes
+        yield database_1.default.query('UPDATE complaints SET status = ?, resolution_notes = ? WHERE id = ?', [status, resolution_notes || null, id]);
         res.json({ message: 'Complaint status updated' });
     }
     catch (error) {

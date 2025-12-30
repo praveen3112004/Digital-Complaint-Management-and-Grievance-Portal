@@ -8,12 +8,9 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const pool = promise_1.default.createPool({
     host: process.env.DB_HOST || 'localhost',
+    port: Number(process.env.DB_PORT) || 3306,
     user: process.env.DB_USER || 'root',
-<<<<<<< HEAD
-    password: process.env.DB_PASSWORD || '',
-=======
-    password: process.env.DB_PASSWORD || 'YOURDBPASSWORD',
->>>>>>> 94cf4cb5bd00fdaeb95285bb0fdf68e57d64f5ee
+    password: process.env.DB_PASSWORD || 'Praveen3112004',
     database: process.env.DB_NAME || 'complaint_portal',
     waitForConnections: true,
     connectionLimit: 10,

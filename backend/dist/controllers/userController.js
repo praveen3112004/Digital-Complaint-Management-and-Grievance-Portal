@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.loginUser = exports.registerUser = void 0;
+exports.getStaff = exports.loginUser = exports.registerUser = void 0;
 const database_1 = __importDefault(require("../config/database"));
 const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -54,3 +54,14 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.loginUser = loginUser;
+const getStaff = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const [rows] = yield database_1.default.query('SELECT id, name, email FROM users WHERE role = ?', ['Staff']);
+        res.json(rows);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error fetching staff' });
+    }
+});
+exports.getStaff = getStaff;
