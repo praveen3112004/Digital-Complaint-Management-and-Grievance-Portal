@@ -26,6 +26,8 @@ CREATE TABLE IF NOT EXISTS complaints (
     description TEXT NOT NULL,
     category VARCHAR(50) NOT NULL, -- e.g., 'Plumbing', 'Electrical'
     status ENUM('Open', 'Assigned', 'In-progress', 'Resolved') NOT NULL DEFAULT 'Open',
+    priority ENUM('Low', 'Medium', 'High') DEFAULT 'Medium',
+    resolution_notes TEXT DEFAULT NULL,
     attachment_url VARCHAR(255) DEFAULT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
