@@ -1,6 +1,11 @@
 import { Request, Response } from 'express';
 import pool from '../config/database';
 import { RowDataPacket, ResultSetHeader } from 'mysql2';
+import crypto from 'crypto';
+
+const hashPassword = (password: string) => {
+    return crypto.createHash('sha256').update(password).digest('hex');
+};
 
 export const registerUser = async (req: Request, res: Response) => {
   try {
@@ -13,10 +18,12 @@ export const registerUser = async (req: Request, res: Response) => {
        return;
     }
 
-    // Insert user (Password should be hashed in production, keeping simple as requested/demo)
+    // Insert user with HASHED password
+    const hashedPassword = hashPassword(password);
+    
     const [result] = await pool.query<ResultSetHeader>(
       'INSERT INTO users (name, email, password, role, contact_info) VALUES (?, ?, ?, ?, ?)',
-      [name, email, password, role, contact_info]
+      [name, email, hashedPassword, role, contact_info]
     );
 
     res.status(201).json({ message: 'User registered successfully', userId: result.insertId });
@@ -30,7 +37,10 @@ export const loginUser = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
     
-    const [rows] = await pool.query<RowDataPacket[]>('SELECT * FROM users WHERE email = ? AND password = ?', [email, password]);
+    // Hash input to compare with stored hash
+    const hashedPassword = hashPassword(password);
+    
+    const [rows] = await pool.query<RowDataPacket[]>('SELECT * FROM users WHERE email = ? AND password = ?', [email, hashedPassword]);
     
     if (rows.length === 0) {
        res.status(401).json({ message: 'Invalid credentials' });

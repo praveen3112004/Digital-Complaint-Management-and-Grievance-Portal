@@ -14,8 +14,6 @@ const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3000;
 app.use((0, cors_1.default)());
 app.use(body_parser_1.default.json());
-const path_1 = __importDefault(require("path"));
-app.use('/uploads', express_1.default.static(path_1.default.join(__dirname, '../uploads')));
 // Routes
 app.use('/api/users', userRoutes_1.default);
 app.use('/api/complaints', complaintRoutes_1.default);
