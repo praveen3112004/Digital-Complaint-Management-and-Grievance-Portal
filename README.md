@@ -51,6 +51,8 @@ A full-stack Capstone Project built with Angular 18, Node.js, Express, and MySQL
     DB_PORT=3306
     JWT_SECRET=your_secret_key
     ```
+    *   **Note 1**: `JWT_SECRET` can be any random string (e.g., `mySecretKey123`). It is used to sign authentication tokens.
+    *   **Note 2**: Update your `DB_PASSWORD` in both `.env` and `src/config/database.ts` (fallback).
 4.  Start the server:
     ```bash
     npm run dev
