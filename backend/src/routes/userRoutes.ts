@@ -7,7 +7,7 @@ const router = Router();
 router.post('/register', registerUser);
 router.post('/login', loginUser);
 
-// Protected routes (Admin only ideally, but keeping simple)
+// Protected routes 
 router.get('/staff', getStaff);
 
 export default router;

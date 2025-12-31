@@ -3,7 +3,7 @@ import pool from './config/database';
 const migratePriority = async () => {
   try {
     console.log('Running priority migration...');
-    // Add priority column with default 'Medium'
+    // priority column 
     await pool.query("ALTER TABLE complaints ADD COLUMN priority ENUM('Low', 'Medium', 'High') DEFAULT 'Medium';");
     console.log('Migration successful: Added priority column.');
     process.exit(0);

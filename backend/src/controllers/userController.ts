@@ -37,7 +37,7 @@ export const loginUser = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
     
-    // Hash input to compare with stored hash
+    // stored hash
     const hashedPassword = hashPassword(password);
     
     const [rows] = await pool.query<RowDataPacket[]>('SELECT * FROM users WHERE email = ? AND password = ?', [email, hashedPassword]);
@@ -48,7 +48,7 @@ export const loginUser = async (req: Request, res: Response) => {
     }
 
     const user = rows[0];
-    // In a real app, generate JWT here. Returning user info for simple auth.
+    //generate JWT here. 
     res.json({ 
         message: 'Login successful', 
         user: { id: user.id, name: user.name, role: user.role, email: user.email } 

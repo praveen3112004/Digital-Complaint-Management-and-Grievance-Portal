@@ -12,7 +12,7 @@ const upload = multer({ storage: storage });
 
 const router = Router();
 
-router.use(authMiddleware); // Apply to all complaint routes
+router.use(authMiddleware); // apply to all complaint routes
 
 router.get('/', getComplaints);
 router.post('/', upload.single('image'), createComplaint);
